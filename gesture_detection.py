@@ -10,6 +10,7 @@ import numpy as np
 import mediapipe as mp
 
 from utils import CvFpsCalc
+from generate_commands import CommandGenerator
 
 
 def main():
@@ -39,6 +40,8 @@ def main():
 
     filename = 'models/logreg.pkl'
     model = pickle.load(open(filename, 'rb'))
+
+    commander = CommandGenerator()
 
     ############################################################
     with open('models/keypoint_classifier_label.csv',
@@ -92,7 +95,8 @@ def main():
 
 
                 hand_sign_id = model.predict(pre_processed_landmark_list.reshape(1,-1))[0]
-
+                commander.add_gestures(hand_sign_id)
+                # print(commander.get_command())
 
                 debug_image = draw_bounding_rect(use_brect, debug_image, brect)
                 debug_image = draw_landmarks(debug_image, landmark_list)
@@ -413,6 +417,7 @@ def draw_info(image, fps, mode, number):
                        cv.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 1,
                        cv.LINE_AA)
     return image
+
 
 
 if __name__ == '__main__':
