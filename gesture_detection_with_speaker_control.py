@@ -41,7 +41,7 @@ def main():
         min_tracking_confidence=min_tracking_confidence,
     )
 
-    filename = 'models/logreg.pkl'
+    filename = 'models/logreg_extended.pkl'
     model = pickle.load(open(filename, 'rb'))
 
     commander = CommandGenerator()
@@ -53,7 +53,7 @@ def main():
 
     # play the first song
     player = vlc.MediaPlayer(plist[0])
-    player.audio_set_volume(30)
+    player.audio_set_volume(40)
     player.play()
 
     ############################################################
@@ -106,12 +106,24 @@ def main():
                 pre_processed_landmark_list = pre_process_landmark(
                     landmark_list)
 
-
                 hand_sign_id = model.predict(pre_processed_landmark_list.reshape(1,-1))[0]
                 commander.add_gestures(hand_sign_id)
                 command = commander.get_command()
+
                 if command == 2:
                     player.pause()
+                # raise volume
+                elif command == 3:
+                # time.sleep(5)
+                # if already at max volume, do nothing
+                    if player.audio_get_volume() < 100:
+                        player.audio_set_volume(player.audio_get_volume() + 20)
+                # lower volume
+                elif command == 4:
+                    # time.sleep(5)
+                    # if already at min volume, do nothing
+                    if player.audio_get_volume() > 0:
+                        player.audio_set_volume(player.audio_get_volume() - 20)
 
                 debug_image = draw_bounding_rect(use_brect, debug_image, brect)
                 debug_image = draw_landmarks(debug_image, landmark_list)
