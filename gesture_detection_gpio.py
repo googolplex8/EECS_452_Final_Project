@@ -20,6 +20,11 @@ GPIO.setup(27, GPIO.OUT)
 GPIO.setup(22, GPIO.OUT)
 GPIO.setup(23, GPIO.OUT)
 
+GPIO.output(17, 1)
+GPIO.output(27, 1)
+GPIO.output(22, 1)
+GPIO.output(23, 1)
+
 def main():
     cap_device = 0
     cap_width = 960
@@ -53,13 +58,13 @@ def main():
     #################################################################
 
     if(commander == 2):
-        GPIO.output(17, 1)
+        GPIO.output(17, 0)
     if(commander == 3):
-        GPIO.output(27, 1)
+        GPIO.output(27, 0)
     if(commander == 4):
-        GPIO.output(22, 1)
+        GPIO.output(22, 0)
     if(commander == -1):
-        GPIO.output(23, 1)
+        GPIO.output(23, 0)
 
     ############################################################
     with open('models/keypoint_classifier_label.csv',
