@@ -57,15 +57,6 @@ def main():
 
     #################################################################
 
-    if(commander == 2):
-        GPIO.output(17, 0)
-    if(commander == 3):
-        GPIO.output(27, 0)
-    if(commander == 4):
-        GPIO.output(22, 0)
-    if(commander == -1):
-        GPIO.output(23, 0)
-
     ############################################################
     with open('models/keypoint_classifier_label.csv',
               encoding='utf-8-sig') as f:
@@ -82,6 +73,10 @@ def main():
     mode = 0
 
     while True:
+        GPIO.output(17, 1)
+        GPIO.output(27, 1)
+        GPIO.output(22, 1)
+        GPIO.output(23, 1)
         fps = cvFpsCalc.get()
 
         ##################################################
@@ -119,7 +114,17 @@ def main():
 
                 hand_sign_id = model.predict(pre_processed_landmark_list.reshape(1,-1))[0]
                 commander.add_gestures(hand_sign_id)
-                # print(commander.get_command())
+                command = commander.get_command()
+                if(command == 2):
+                    print("Got here")
+                    GPIO.output(17, 0)
+                if(command == 3):
+                    GPIO.output(27, 0)
+                if(command == 4):
+                    GPIO.output(22, 0)
+                if(command == -1):
+                    GPIO.output(23, 0)
+                print(command)
 
                 debug_image = draw_bounding_rect(use_brect, debug_image, brect)
                 debug_image = draw_landmarks(debug_image, landmark_list)
