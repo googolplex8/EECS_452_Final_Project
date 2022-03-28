@@ -16,7 +16,7 @@ songIndex = 0
 playlistLength = len(plist)
 
 #play the first song
-player = vlc.MediaPlayer(plist[0])
+player = vlc.MediaPlayer(plist[1])
 player.audio_set_volume(40)
 player.play()
 
@@ -37,8 +37,8 @@ def volume_down():
         player.audio_set_volume(player.audio_get_volume() - 20)
 
 def play_pause(channel):
-    global go
-    print("helllo")
+    global go+
+    
     #turn off
     if(go):
         player.pause()
