@@ -10,7 +10,7 @@ import numpy as np
 import mediapipe as mp
 
 from utils import CvFpsCalc
-from generate_commands import CommandGenerator
+from utils.generate_commands import CommandGenerator
 
 
 def main():
@@ -19,7 +19,7 @@ def main():
     cap_height = 540
 
     use_static_image_mode = False
-    min_detection_confidence = 0.5
+    min_detection_confidence = 0.1
     min_tracking_confidence = 0.5
 
     use_brect = True

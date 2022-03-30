@@ -11,7 +11,7 @@ import mediapipe as mp
 import RPi.GPIO as GPIO
 
 from utils import CvFpsCalc
-from generate_commands import CommandGenerator
+from utils.generate_commands import CommandGenerator
 
 GPIO.setmode(GPIO.BCM)
 

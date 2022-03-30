@@ -10,10 +10,9 @@ import numpy as np
 import mediapipe as mp
 
 from utils import CvFpsCalc
-from generate_commands import CommandGenerator
+from utils.generate_commands import CommandGenerator
 
 import vlc
-import time
 
 
 def main():
