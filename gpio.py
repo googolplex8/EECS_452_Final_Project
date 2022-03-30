@@ -16,7 +16,7 @@ GPIO.setup(6,GPIO.OUT)
 
 
 #playlist of songs
-plist = ['howLong.mp3', 'godIsAWoman.mp3', 'tillTheWorldEnds.mp3']
+plist = ['howLong.mp3', 'godIsAWoman.mp3', 'tillTheWorldEnds.mp3'. 'thatsWhatILike.mp3', '24kMagic']
 songIndex = 0
 playlistLength = len(plist)
 
