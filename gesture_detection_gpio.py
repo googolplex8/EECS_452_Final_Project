@@ -18,12 +18,15 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(17, GPIO.OUT)
 GPIO.setup(27, GPIO.OUT)
 GPIO.setup(22, GPIO.OUT)
-GPIO.setup(23, GPIO.OUT)
+GPIO.setup(13, GPIO.OUT)
+GPIO.setup(19, GPIO.OUT)
 
 GPIO.output(17, 1)
 GPIO.output(27, 1)
 GPIO.output(22, 1)
-GPIO.output(23, 1)
+GPIO.output(13, 1)
+GPIO.output(19, 1)
+
 
 def main():
     cap_device = 0
@@ -76,7 +79,8 @@ def main():
         GPIO.output(17, 1)
         GPIO.output(27, 1)
         GPIO.output(22, 1)
-        GPIO.output(23, 1)
+        GPIO.output(13, 1)
+        GPIO.output(19, 1)
         fps = cvFpsCalc.get()
 
         ##################################################
@@ -89,7 +93,7 @@ def main():
         ret, image = cap.read()
         if not ret:
             break
-        debug_image = cv.flip(image, 1)  # ミラー表示
+        debug_image = cv.flip(image, 1)
         # debug_image = copy.deepcopy(image)
 
         ##############################################################
@@ -115,17 +119,21 @@ def main():
                 hand_sign_id = model.predict(pre_processed_landmark_list.reshape(1,-1))[0]
                 commander.add_gestures(hand_sign_id)
                 command = commander.get_command()
-                if(command == 2):
+                if command == 2:
                     print('pointer - play/pause')
                     GPIO.output(17, 0)
-                if(command == 3):
+                elif command == 3:
                     print('thumb up - volume up')
                     GPIO.output(22, 0)
-                if(command == 4):
+                elif command == 4:
                     print('thumb down - volume down')
                     GPIO.output(27, 0)
-                if(command == -1):
-                    GPIO.output(23, 0)
+                elif command == 5:
+                    print('horns up - skip song')
+                    GPIO.output(13, 0)
+                elif command == 6:
+                    print('horns down - back song')
+                    GPIO.output(19, 0)
                 # print(command)
 
                 # debug_image = draw_bounding_rect(use_brect, debug_image, brect)

@@ -131,13 +131,15 @@ def logging_csv(number, mode, landmark_list):
     print("mode: " + str(mode) + "   number: " + str(number))
     if mode == 0:
         pass
-    if mode == 1 and (0 <= number <= 4):
+    if mode == 1 and (0 <= number <= 6):
         '''
         0: open
         1: close
         2: pointer
         3: thumb up
         4: thumb down
+        5: horns up 
+        6: horns down
         '''
         csv_path = 'data/keypoints.csv'
         with open(csv_path, 'a', newline="") as f:

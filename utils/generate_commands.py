@@ -42,4 +42,6 @@ class CommandGenerator:
             return 4
         elif self.gestures.count(5) >= self.vote_count:
             return 5
+        elif self.gestures.count(6) >= self.vote_count:
+            return 6
         return -1
