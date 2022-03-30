@@ -53,7 +53,7 @@ def main():
         min_tracking_confidence=min_tracking_confidence,
     )
 
-    filename = 'models/logreg_extended.pkl'
+    filename = 'models/logreg_complete.pkl'
     model = pickle.load(open(filename, 'rb'))
 
     commander = CommandGenerator(command_interval=1)
