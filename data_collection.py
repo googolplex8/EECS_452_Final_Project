@@ -92,7 +92,6 @@ def calc_landmark_list(image, landmarks):
 
     landmark_point = []
 
-    # キーポイント
     for _, landmark in enumerate(landmarks.landmark):
         landmark_x = min(int(landmark.x * image_width), image_width - 1)
         landmark_y = min(int(landmark.y * image_height), image_height - 1)
