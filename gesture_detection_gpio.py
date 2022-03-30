@@ -50,10 +50,10 @@ def main():
         min_tracking_confidence=min_tracking_confidence,
     )
 
-    filename = 'models/logreg.pkl'
+    filename = 'models/logreg_extended.pkl'
     model = pickle.load(open(filename, 'rb'))
 
-    commander = CommandGenerator()
+    commander = CommandGenerator(command_interval=1)
 
     #################################################################
 
@@ -89,8 +89,8 @@ def main():
         ret, image = cap.read()
         if not ret:
             break
-        image = cv.flip(image, 1)  # ミラー表示
-        debug_image = copy.deepcopy(image)
+        debug_image = cv.flip(image, 1)  # ミラー表示
+        # debug_image = copy.deepcopy(image)
 
         ##############################################################
         image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
@@ -116,29 +116,31 @@ def main():
                 commander.add_gestures(hand_sign_id)
                 command = commander.get_command()
                 if(command == 2):
-                    print("Got here")
+                    print('pointer - play/pause')
                     GPIO.output(17, 0)
                 if(command == 3):
-                    GPIO.output(27, 0)
-                if(command == 4):
+                    print('thumb up - volume up')
                     GPIO.output(22, 0)
+                if(command == 4):
+                    print('thumb down - volume down')
+                    GPIO.output(27, 0)
                 if(command == -1):
                     GPIO.output(23, 0)
-                print(command)
+                # print(command)
 
-                debug_image = draw_bounding_rect(use_brect, debug_image, brect)
-                debug_image = draw_landmarks(debug_image, landmark_list)
-                debug_image = draw_info_text(
-                    debug_image,
-                    brect,
-                    handedness,
-                    keypoint_classifier_labels[hand_sign_id]
-                )
+                # debug_image = draw_bounding_rect(use_brect, debug_image, brect)
+                # debug_image = draw_landmarks(debug_image, landmark_list)
+                # debug_image = draw_info_text(
+                #    debug_image,
+                #    brect,
+                #    handedness,
+                #    keypoint_classifier_labels[hand_sign_id]
+                #)
 
-        debug_image = draw_info(debug_image, fps, mode, number)
+        # debug_image = draw_info(debug_image, fps, mode, number)
 
         ##############################################################
-        cv.imshow('Hand Gesture Recognition', debug_image)
+        # cv.imshow('Hand Gesture Recognition', debug_image)
 
     cap.release()
     cv.destroyAllWindows()
@@ -449,4 +451,4 @@ def draw_info(image, fps, mode, number):
 
 
 if __name__ == '__main__':
-    main()
+    main() 

@@ -12,19 +12,22 @@ class CommandGenerator:
         self.vote_count = vote_threshold*deque_size
 
     def add_gestures(self, gesture):
-        self.gestures.append(gesture)
-        if len(self.gestures) > self.deque_size:
-            self.gestures.popleft()
+        if time.time() - self.last_command_time > self.command_interval:
+            self.gestures.append(gesture)
+            if len(self.gestures) > self.deque_size:
+                self.gestures.popleft()
 
     def get_command(self):
         current_time = time.time()
         if current_time - self.last_command_time > self.command_interval:
-            self.last_command_time = time.time()
+            
             majority_vote = self.get_majority_vote()
             # open and close gestures
-            if majority_vote == 0 or majority_vote == 1:
+            if majority_vote == -1:
                 return -1
             else:
+                self.last_command_time = time.time()
+                self.gestures.clear()
                 return majority_vote
         # it has not been long enough since last command
         else:
