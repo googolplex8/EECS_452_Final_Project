@@ -16,12 +16,12 @@ GPIO.setup(6,GPIO.OUT)
 
 
 #playlist of songs
-plist = ['howLong.mp3', 'godIsAWoman.mp3', 'tillTheWorldEnds.mp3'. 'thatsWhatILike.mp3', '24kMagic']
+plist = ['howLong.mp3', 'godIsAWoman.mp3', 'tillTheWorldEnds.mp3', 'thatsWhatILike.mp3', '24kMagic.mp3']
 songIndex = 0
 playlistLength = len(plist)
 
 #play the first song
-player = vlc.MediaPlayer(plist[0])
+player = vlc.MediaPlayer(plist[4])
 player.audio_set_volume(40)
 player.play()
 
@@ -82,6 +82,7 @@ def play_pause(channel):
         GPIO.output(6,GPIO.LOW)
         
 def next_song(channel):
+    global songIndex
     #if at last song in playlist, go to beginning
     if (songIndex == playlistLength - 1):
         currentVol = player.audio_get_volume()
@@ -114,6 +115,7 @@ def next_song(channel):
             
             
 def prev_song(channel):
+    global songIndex
     #if at first song in playlist, go to end
     if (songIndex == 0):
         currentVol = player.audio_get_volume()
