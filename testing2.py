@@ -8,6 +8,8 @@ GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
 #playlist of songs
@@ -50,11 +52,80 @@ def play_pause(channel):
         player.play()
         go = True
     
+def next_song(channel):
+    print("next")
+    global player
+    global songIndex
+    #if at last song in playlist, go to beginning
+    if (songIndex == playlistLength - 1):
+        currentVol = player.audio_get_volume()
+        player.pause()
+        player = vlc.MediaPlayer(plist[0])
+        player.audio_set_volume(currentVol)
+        player.play()
+        songIndex = 0
+        #GPIO.output(5,GPIO.HIGH)
+        #GPIO.output(4,GPIO.LOW)
+        #GPIO.output(6,GPIO.HIGH)
+        #time.sleep(2)
+        #GPIO.output(4,GPIO.LOW)
+        #GPIO.output(5,GPIO.LOW)
+        #GPIO.output(6,GPIO.LOW)
+    else:
+        currentVol = player.audio_get_volume()
+        player.pause()
+        player = vlc.MediaPlayer(plist[songIndex + 1])
+        player.audio_set_volume(currentVol)
+        player.play()
+        songIndex = songIndex + 1
+#         GPIO.output(5,GPIO.HIGH)
+#         GPIO.output(4,GPIO.LOW)
+#         GPIO.output(6,GPIO.HIGH)
+#         time.sleep(2)
+#         GPIO.output(4,GPIO.LOW)
+#         GPIO.output(5,GPIO.LOW)
+#         GPIO.output(6,GPIO.LOW)
 
+
+def prev_song(channel):
+    print("prev")
+    global player
+    global songIndex
+    #if at first song in playlist, go to end
+    if (songIndex == 0):
+        currentVol = player.audio_get_volume()
+        player.pause()
+        player = vlc.MediaPlayer(plist[playlistLength - 1])
+        player.audio_set_volume(currentVol)
+        player.play()
+        songIndex = playlistLength - 1
+#         GPIO.output(4,GPIO.HIGH)
+#         GPIO.output(5,GPIO.LOW)
+#         GPIO.output(6,GPIO.HIGH)
+#         time.sleep(2)
+#         GPIO.output(4,GPIO.LOW)
+#         GPIO.output(5,GPIO.LOW)
+#         GPIO.output(6,GPIO.LOW)
+    else:
+        currentVol = player.audio_get_volume()
+        player.pause()
+        player = vlc.MediaPlayer(plist[songIndex - 1])
+        player.audio_set_volume(currentVol)
+        player.play()
+        songIndex = songIndex - 1
+#         GPIO.output(4,GPIO.HIGH)
+#         GPIO.output(5,GPIO.LOW)
+#         GPIO.output(6,GPIO.HIGH)
+#         time.sleep(2)
+#         GPIO.output(4,GPIO.LOW)
+#         GPIO.output(5,GPIO.LOW)
+#         GPIO.output(6,GPIO.LOW)
 
 GPIO.add_event_detect(22, GPIO.FALLING, callback=volume_up)
 GPIO.add_event_detect(27, GPIO.FALLING, callback=volume_down)
 GPIO.add_event_detect(17, GPIO.FALLING, callback=play_pause)
+GPIO.add_event_detect(23, GPIO.FALLING, callback=next_song)
+GPIO.add_event_detect(24, GPIO.FALLING, callback=prev_song)
 
 
 
@@ -74,7 +145,7 @@ while (True):
     #elif (p27 != 1):
     #    volume_down()
     
-    print(GPIO.input(17))
+    #print(GPIO.input(17))
     #print(GPIO.input(22))
     #print(GPIO.input(27))
     
