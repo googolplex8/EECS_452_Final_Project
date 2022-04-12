@@ -46,7 +46,7 @@ def main():
     commander = CommandGenerator()
 
     # playlist of songs
-    plist = ['songs/howLong.mp3', 'songs/godIsAWoman.mp3', 'songs/tillTheWorldEnds.mp3',  'songs/thatsWhatILike.mp3', 'songs/24kMagic.mp3']
+    plist = ['songs/howLong.mp3', 'songs/godIsAWoman.mp3', 'songs/tillTheWorldEnds.mp3',  'songs/thatsWhatILike.mp3', 'songs/24kMagic.mp3', 'songs/the_difference.mp3', 'songs/sunshine.mp3']
     songIndex = 0
     playlistLength = len(plist)
 
